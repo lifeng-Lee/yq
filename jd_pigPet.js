@@ -166,9 +166,20 @@ function pigPetUserBag() {
                   }
                   for (let item of data.resultData.resultData.goods) {
                     if (item.count >= 20) {
-                      console.log(`10秒后开始喂食${item.goodsName}，当前数量为${item.count}g`)
-                      await $.wait(10000);
-                      await pigPetAddFood(item.sku);
+                        if (item.count >= 100) {
+
+                            for (let index = 0; index < 5; index++) {
+                                console.log(`10秒后开始第${index + 1}次喂食${item.goodsName}，当前数量为${item.count}g`)
+                                await $.wait(10000);
+                                await pigPetAddFood(item.sku);
+                            }
+
+                        } else {
+                            console.log(`10秒后开始喂食${item.goodsName}，当前数量为${item.count}g`)
+                            await $.wait(10000);
+                            await pigPetAddFood(item.sku);
+                        }
+                      
                     }
                   }
                 } else {
@@ -193,7 +204,7 @@ function pigPetUserBag() {
 //喂食
 function pigPetAddFood(skuId) {
   return new Promise(async resolve => {
-    console.log(`skuId::::${skuId}`)
+    console.log(`skuId=====${skuId}`)
     const body = {
       "source": 2,
       "channelLV":"yqs",
@@ -214,8 +225,9 @@ function pigPetAddFood(skuId) {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
-            console.log(`喂食结果：${data}`)
+            // console.log(`喂食结果：${data}`)
             data = JSON.parse(data);
+            console.log("喂食结果：",data.resultData.resultData);
           } else {
             console.log(`京东服务器返回空数据`)
           }
@@ -243,6 +255,7 @@ function pigPetLogin() {
         } else {
           if (data) {
             data = JSON.parse(data);
+            console.log("养猪信息：",data.resultData.resultData);
             if (data.resultCode === 0) {
               if (data.resultData.resultCode === 0) {
                 $.hasPig = data.resultData.resultData.hasPig;
