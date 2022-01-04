@@ -30,17 +30,19 @@ $.try = true;
 $.sentNum = 0;
 $.cookiesArr = []
 $.innerKeyWords =
-    [
-        "幼儿园", "教程", "英语", "辅导", "培训",
-        "孩子", "小学", "成人用品", "套套", "情趣",
-        "自慰", "阳具", "飞机杯", "男士用品", "女士用品",
-        "内衣", "高潮", "避孕", "乳腺", "肛塞", "肛门",
-        "宝宝", "玩具", "芭比", "娃娃", "男用",
-        "女用", "神油", "足力健", "老年", "老人",
-        "宠物", "饲料", "丝袜", "黑丝", "磨脚",
-        "脚皮", "除臭", "性感", "内裤", "跳蛋",
-        "安全套", "龟头", "阴道", "阴部"
-    ]
+    // [
+    //     "幼儿园", "教程", "英语", "辅导", "培训",
+    //     "孩子", "小学", "成人用品", "套套", "情趣",
+    //     "自慰", "阳具", "飞机杯", "男士用品", "女士用品",
+    //     "内衣", "高潮", "避孕", "乳腺", "肛塞", "肛门",
+    //     "宝宝", "玩具", "芭比", "娃娃", "男用",
+    //     "女用", "神油", "足力健", "老年", "老人",
+    //     "宠物", "饲料", "丝袜", "黑丝", "磨脚",
+    //     "脚皮", "除臭", "性感", "内裤", "跳蛋",
+    //     "安全套", "龟头", "阴道", "阴部"
+    // ]
+    []
+    
 //下面很重要，遇到问题请把下面注释看一遍再来问
 let args_xh = {
     /*
@@ -301,6 +303,18 @@ function requireConfig(){
             //IOS等用户直接用NobyDa的jd $.cookie
             $.cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
         }
+        let cookieAry = [];
+
+        if($.cookiesArr.length >= 4) {
+          for (let index = 0; index < 4; index++) {
+            const element = $.cookiesArr[index];
+            cookieAry.push(element)
+          }
+        }
+
+        $.cookiesArr = cookieAry
+
+
         if(typeof process.env.JD_TRY_WHITELIST === "undefined") args_xh.whiteList = false;
         else args_xh.whiteList = process.env.JD_TRY_WHITELIST === 'true';
         if(typeof process.env.JD_TRY_PLOG === "undefined") args_xh.printLog = true;
