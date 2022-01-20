@@ -41,6 +41,14 @@ let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let goodsUrl = '', taskInfoKey = [];
 let randomCount = $.isNode() ? 20 : 5;
+
+let helpArray = ['MTAxODc2NTE0NzAwMDAwMDAwNjMwNzYyMQ==',
+                'MTAxODc2NTEzNDAwMDAwMDAwMzY3MDc0MQ==',
+                'MTAxODc2NTE0NzAwMDAwMDAwNjMyMTU0NQ==',
+                'MTE1NDQ5MzYwMDAwMDAwNDQ5MjcxMzk=',
+                'MTAxODc2NTEzMTAwMDAwMDAwMzY3ODA3Nw==',
+                'MTEzMzI1MTE4NTAwMDAwMDA1NjkyNjQ0OQ==']
+
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -135,22 +143,22 @@ async function jdPet() {
       }
       $.taskInfo = $.taskInit.result;
 
-      await petSport();//遛弯
+//       await petSport();//遛弯
       await slaveHelp();//助力好友
-      await masterHelpInit();//获取助力的信息
-      await doTask();//做日常任务
-      await feedPetsAgain();//再次投食
-      await energyCollect();//收集好感度
-      await showMsg();
-      console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
+//       await masterHelpInit();//获取助力的信息
+//       await doTask();//做日常任务
+//       await feedPetsAgain();//再次投食
+//       await energyCollect();//收集好感度
+//       await showMsg();
+//       console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
     } else if (initPetTownRes.code === '0'){
       console.log(`初始化萌宠失败:  ${initPetTownRes.message}`);
     }
   } catch (e) {
     $.logErr(e)
     const errMsg = `京东账号${$.index} ${$.nickName || $.UserName}\n任务执行异常，请检查执行日志 ‼️‼️`;
-    if ($.isNode()) await notify.sendNotify(`${$.name}`, errMsg);
-    $.msg($.name, '', `${errMsg}`)
+//     if ($.isNode()) await notify.sendNotify(`${$.name}`, errMsg);
+//     $.msg($.name, '', `${errMsg}`)
   }
 }
 // 收取所有好感度
@@ -507,20 +515,20 @@ function submitCode() {
 function shareCodesFormat() {
   return new Promise(async resolve => {
     // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
-    newShareCodes = [];
-    if ($.shareCodesArr[$.index - 1]) {
-      newShareCodes = $.shareCodesArr[$.index - 1].split('@');
-    } else {
-      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-      const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
-      newShareCodes = shareCodes[tempIndex].split('@');
-    }
-    //因好友助力功能下线。故暂时屏蔽
-    try{readShareCodeRes = await readShareCode();}catch(e){}
-    //const readShareCodeRes = null;
-    if (readShareCodeRes && readShareCodeRes.code === 200) {
-      newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
-    }
+    newShareCodes = helpArray;
+//     if ($.shareCodesArr[$.index - 1]) {
+//       newShareCodes = $.shareCodesArr[$.index - 1].split('@');
+//     } else {
+//       console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
+//       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
+//       newShareCodes = shareCodes[tempIndex].split('@');
+//     }
+//     //因好友助力功能下线。故暂时屏蔽
+//     try{readShareCodeRes = await readShareCode();}catch(e){}
+//     //const readShareCodeRes = null;
+//     if (readShareCodeRes && readShareCodeRes.code === 200) {
+//       newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
+//     }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
