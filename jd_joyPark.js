@@ -26,7 +26,7 @@ if ($.isNode()) {
 $.JOY_COIN_MAXIMIZE = process.env.JOY_COIN_MAXIMIZE === '1'
 $.log(`最大化收益模式: 已${$.JOY_COIN_MAXIMIZE ? `默认开启` : `关闭`}  `)
 
-$.invitePin = ['So1GaedHGcIYZaFuv10dTw']
+$.invitePin = ['']
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
 !(async () => {
